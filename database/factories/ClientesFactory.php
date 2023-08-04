@@ -11,12 +11,20 @@ class ClientesFactory extends Factory
 
     public function definition()
     {
-        return [
+        /* return [
             'nombre' => $this->faker->name,
             'identificacion' => $this->faker->phoneNumber,
             'telefono' => $this->faker->phoneNumber,
             'direccion' => $this->faker->address,
             'email' => $this->faker->unique->safeEmail,
+        ]; */
+
+        return [
+            'nombre' => "prueba",
+            'identificacion' => "123456",
+            'telefono' => "879456",
+            'direccion' => "calle 1",
+            'email' => "prueba@prueba.com",
         ];
     }
 }

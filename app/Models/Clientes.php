@@ -10,4 +10,6 @@ class Clientes extends Model
 {
     use SoftDeletes;
     use HasFactory;
+
+    protected $table='clientes';
 }
