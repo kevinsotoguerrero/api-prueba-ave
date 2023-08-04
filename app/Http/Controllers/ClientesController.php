@@ -3,13 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clientes;
+use App\OpenApi\Responses\RegistrosActualizadosCorrectamente;
+use App\OpenApi\Responses\RegistrosEliminadosCorrectamente;
+use App\OpenApi\Responses\RegistrosEncontrados;
+use App\OpenApi\Responses\RegistrosInsertadosCorrectamente;
 use Illuminate\Http\Request;
+use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
+
+#[OpenApi\PathItem]
 
 class ClientesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Mostrar clientes
+     *
+     *
+     *
+     *
      */
+    #[OpenApi\Operation(id: 'leerClientes', tags: ['v1'])]
+    #[OpenApi\Response(factory: RegistrosEncontrados::class)]
     public function index()
     {
         $clientes = Clientes::all();
@@ -20,8 +33,14 @@ class ClientesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crear cliente
+     *
+     *
+     *
+     *
      */
+    #[OpenApi\Operation(id: 'crearCliente', tags: ['v1'])]
+    #[OpenApi\Response(factory: RegistrosInsertadosCorrectamente::class)]
     public function store(Request $request)
     {
         $request->validate([
@@ -48,24 +67,14 @@ class ClientesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Actualizar cliente
+     *
+     *
+     *
+     *
      */
-    public function show(Clientes $clientes)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Clientes $clientes)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    #[OpenApi\Operation(id: 'actualizarCliente', tags: ['v1'])]
+    #[OpenApi\Response(factory: RegistrosActualizadosCorrectamente::class)]
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -91,12 +100,22 @@ class ClientesController extends Controller
 
         $cliente->save();
 
-        return response()->json($cliente, 200);
+        return response()->json([
+            'message' => 'registro actualizado correctamente',
+            'data' => $cliente
+        ], 200);
+
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar cliente
+     *
+     *
+     *
+     *
      */
+    #[OpenApi\Operation(id: 'eliminarCliente', tags: ['v1'])]
+    #[OpenApi\Response(factory: RegistrosEliminadosCorrectamente::class)]
     public function destroy($id)
     {
         $clientes = Clientes::find($id);
